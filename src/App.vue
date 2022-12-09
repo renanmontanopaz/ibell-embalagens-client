@@ -1,8 +1,55 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <p class="logo">IBELL</p>
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Produtos
+          </a>
+
+          <a class="navbar-item">
+            Clientes
+          </a>
+
+          <a class="navbar-item">
+            Fornecedores
+          </a>
+
+          <a class="navbar-item">
+            Entrada de Estoque
+          </a>
+
+          <a class="navbar-item">
+            Saida de Estoque
+          </a>
+
+        </div>  
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong>Sign up</strong>
+              </a>
+              <a class="button is-light">
+                Log in
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </nav>
     <router-view/>
   </div>
@@ -13,23 +60,27 @@
   @import "~bulma/bulma.sass";
 
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
   }
 
   nav {
     padding: 30px;
 
-    a {
-      font-weight: bold;
-      color: #2c3e50;
+    .logo {
+      font-size: 36px;
+      font-weight: 800;
+      color: black;
+    }
 
-      &.router-link-exact-active {
+    a {
+        font-weight: bold;
+        color: #2c3e50;
+        &.router-link-exact-active {
         color: #42b983;
       }
     }
   }
+
 </style>
