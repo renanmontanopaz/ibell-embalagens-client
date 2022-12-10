@@ -3,54 +3,32 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item">
-          <p class="logo">IBELL</p>
+          <h1>IBELL</h1>
         </a>
-
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
-
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <router-link to ='/'>
-            
+          <router-link to ='/'> 
             Produtos
-            
           </router-link> 
-
-          <a class="navbar-item">
+          <router-link to ='/client'> 
             Clientes
-          </a>
-
+          </router-link>
           <a class="navbar-item">
             Fornecedores
           </a>
-
           <a class="navbar-item">
             Entrada de Estoque
           </a>
-
           <a class="navbar-item">
             Saida de Estoque
           </a>
-
         </div>  
-
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </nav>
     <router-view/>
@@ -58,7 +36,6 @@
 </template>
 
 <style lang="scss">
-
   @import "~bulma/bulma.sass";
 
   #app {
@@ -68,10 +45,10 @@
   }
 
   nav {
-    padding: 30px;
+    padding: 25px 30px;
 
-    .logo {
-      font-size: 36px;
+    h1 {
+      font-size: 56px;
       font-weight: 800;
       color: black;
     }
@@ -80,6 +57,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 0 40px;
+      gap: 20px;
+      font-size: 18px;
     }
 
     a {
@@ -90,5 +70,4 @@
       }
     }
   }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="columnsCadastrar">
-        <h1>CADASTRO DE FRETE</h1>
+        <h1>CADASTRAR DE PRODUTO</h1>
         <div class="field is-grouped">
             <div class="control">
                 <input class="input" type="text" v-model="product.code" placeholder="Código">
@@ -10,10 +10,8 @@
                 <input class="input" type="text" v-model="product.productName" placeholder="Nome">
             </div>
         </div>
-
         <div class="field is-grouped">
             <div class="control">
-                <label>Unidade de Medida</label>
                 <div class="select is-fullwidth">
                     <select v-model="product.unitMeasure">
                         <option value="undefined" disabled hidden>Unidade de Medida</option>
@@ -23,28 +21,24 @@
                     </select>
                 </div>
             </div>
-
             <div class="control">
-                <label>Fornecedor</label>
                 <div class="select is-fullwidth">
                     <select id="selectProvider" v-model="product.provider">
-                        <option value="" selected disabled hidden>Fornecedor</option>
+                        <option value="undefined" selected disabled hidden>Selecione o Fornecedor</option>
                         <option :value="item" 
                             v-for= "item in providerList" :key="item.id"> {{ item.name }} </option>
                     </select>
                 </div>
             </div>
         </div>
-
         <div class="field is-grouped">
             <div class="control">
-                <input class="input" type="text" v-model="product.observation" placeholder="Observação">
+                <textarea class="textarea" v-model="product.observation" placeholder="Observação"></textarea>
             </div>
         </div>
-
         <div class="field is-grouped">
             <div class="control">
-                <router-link to="/product"><button class="button is-link is-light">Voltar</button></router-link>
+                <router-link to="/"><button class="button is-link is-light">Voltar</button></router-link>
             </div>
             <div class="control">
                 <button @click="onClickCadastrar()" class="button is-success is-focused">Salvar</button>
@@ -60,16 +54,22 @@
         justify-content: center;
         flex-direction: column;
         gap: 15px;
+
         h1 {
             font-size: 36px;
             color: black;
+            font-weight: bold;
             margin-bottom: 15px;
+        }
+
+        .textarea {
+            width: 400px;
+            max-height: 200px;
         }
     }
 </style>
 
 <script lang="ts">
-
     import { ProductClient } from '@/client/Product.client'
     import { ProviderClient } from '@/client/Provider.client'
     import { Product } from '@/model/Product'
@@ -110,26 +110,5 @@
                 error => console.log(error)
             )
         }
-
-        // public changeUnitMeasure(): void {
-        //     var selectUnitMeasure = (<HTMLSelectElement>document.getElementById('selectUnitMeasure')).value;
-
-        //     console.log(selectUnitMeasure)
-
-        //     this.productClient.findByEstado(Number(selectEstado)).then(
-        //         success => this.cidadeOrigemList = success,
-        //         error => console.log(error)
-        //     )
-        // }
-
-        // public changeProvider(): void {
-        //     var selectProvider = (<HTMLSelectElement>document.getElementById('selectProvider')).value;
-
-        //     console.log(selectProvider)
-
-            
-        // }
-
     }
-
 </script>
