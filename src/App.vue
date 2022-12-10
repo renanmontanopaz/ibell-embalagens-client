@@ -15,10 +15,10 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <router-link to ='/product'>
-            <a class="navbar-item">
-              Produtos
-            </a>
+          <router-link to ='/'>
+            
+            Produtos
+            
           </router-link> 
 
           <a class="navbar-item">
@@ -74,6 +74,12 @@
       font-size: 36px;
       font-weight: 800;
       color: black;
+    }
+
+    .navbar-start {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     a {

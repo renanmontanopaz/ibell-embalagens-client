@@ -5,7 +5,7 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/product',
+    path: '/',
     name: 'Product-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/product/ProductListView.vue')
   },
