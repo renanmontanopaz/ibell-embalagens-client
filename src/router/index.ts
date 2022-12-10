@@ -5,9 +5,14 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
-    path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "about" */ '../views/HomeView.vue')
+    path: '/product',
+    name: 'Product-List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/product/ProductListView.vue')
+  },
+  {
+    path: '/register-product',
+    name: 'Register-Product',
+    component: () => import(/* webpackChunkName: "about" */ '../views/product/FormProductView.vue')
   },
   {
     path: '/about',

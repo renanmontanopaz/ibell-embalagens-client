@@ -15,9 +15,11 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
-            Produtos
-          </a>
+          <router-link to ='/product'>
+            <a class="navbar-item">
+              Produtos
+            </a>
+          </router-link> 
 
           <a class="navbar-item">
             Clientes
