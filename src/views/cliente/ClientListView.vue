@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-fullwidth">
-        <h1>PRODUTOS</h1>
+        <h1>CLIENTES</h1>
         <div class="column">
             <p class="control">
                 <input class="input" type="text" placeholder="Pesquise aqui...">
@@ -10,9 +10,9 @@
                     Buscar
                 </button>
             </p>
-            <router-link to="/register-product">
+            <router-link to="/register-client">
                 <button class="button is-primary is-focused">
-                    Cadastrar Produto
+                    Cadastrar Cliente
                 </button>
             </router-link>    
         </div>
@@ -21,23 +21,21 @@
                 <tr>
                     <th>Data</th>
                     <th>Nome</th>
-                    <th>Codigo</th>
-                    <th>Unidade de Medida</th>
-                    <th>Quantidade</th>
-                    <th>Valor Unitario</th>
-                    <th>Fornecedor</th>
+                    <th>CNPJ/CPF</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Email</th>
                     <th>Observação</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for= 'item in productList'>
+                <tr v-for= 'item in clientList'>
                     <th> {{ item.register }} </th>
-                    <th> {{ item.productName }} </th>
-                    <th> {{ item.code }} </th>
-                    <th> {{ item.unitMeasure }} </th>
-                    <th> {{ item.quantity }} </th>
-                    <th> {{ item.unitValue }} </th>
-                    <th> {{ item.provider.name }} </th>
+                    <th> {{ item.name }} </th>
+                    <th> {{ item.cnpjCpf }} </th>
+                    <th> {{ item.phoneNumber }} </th>
+                    <th> {{ item.address }} </th>
+                    <th> {{ item.email }} </th>
                     <th> {{ item.observation }} </th>
                 </tr>
             </tbody>
@@ -58,7 +56,6 @@
             align-items: center;
             gap: 10px;
             padding: 0px 10px;
-
             .input {
                 border-color: blue;
             }
@@ -72,7 +69,6 @@
                     }
                 }
             }
-
             tbody {
                 tr {
                     th {
@@ -92,28 +88,27 @@
 </style>
 
 <script lang="ts">
+    import { ClientClient } from '@/client/Client.client';
+    import { Client } from '@/model/Client';
     import { Component, Vue } from 'vue-property-decorator';
     import { RouterLink } from "vue-router";
-    import { ProductClient } from '@/client/Product.client';
-    import { Product } from '@/model/Product';
     
     @Component
-    export default class ProductListView extends Vue {
+    export default class ClientListView extends Vue {
+        private clientClient: ClientClient = new ClientClient()
 
-        private productClient: ProductClient = new ProductClient()
-
-        public productList: Product[] = []
-
-        public product: Product = new Product()
+        public clientList: Client[] = []
+        
+        public client: Client = new Client()
 
         public mounted(): void{
-            this.listProdutos()
+            this.listClients()
         }
 
-        private listProdutos(): void{
-            this.productClient.findByActiveProducts().then(
+        private listClients(): void{
+            this.clientClient.findByActiveClients().then(
                 success => {
-                    this.productList = success
+                    this.clientList = success
                 },
                 error => {
                     console.log(error)

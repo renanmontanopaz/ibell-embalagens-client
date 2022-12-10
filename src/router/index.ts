@@ -15,9 +15,14 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/product/FormProductView.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/client',
+    name: 'Client-List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/cliente/ClientListView.vue')
+  },
+  {
+    path: '/register-client',
+    name: 'Register-Client',
+    component: () => import(/* webpackChunkName: "about" */ '../views/cliente/RegisterClientView.vue')
   }
 ]
 
