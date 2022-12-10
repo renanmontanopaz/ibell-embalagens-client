@@ -19,9 +19,9 @@
           <router-link to ='/client'> 
             Clientes
           </router-link>
-          <a class="navbar-item">
+          <router-link to ='/provider'> 
             Fornecedores
-          </a>
+          </router-link> 
           <a class="navbar-item">
             Entrada de Estoque
           </a>
