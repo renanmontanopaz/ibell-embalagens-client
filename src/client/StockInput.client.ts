@@ -89,9 +89,9 @@ export class StockInputClient {
 
     }
 
-    public async findByActiveStockInputs() : Promise<StockInput[]> {
+    public async findByActiveStockInputs() : Promise<any> {
         try {
-            return (await this.axiosClient.get<StockInput[]>(`/actives`)).data
+            return (await this.axiosClient.get(`/actives`)).data
         }
         catch(error:any) {
             return Promise.reject(error.response)

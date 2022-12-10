@@ -33,6 +33,16 @@ const routes: Array<RouteConfig> = [
     path: '/register-provider',
     name: 'Register-Provider',
     component: () => import(/* webpackChunkName: "about" */ '../views/provider/RegisterProviderView.vue')
+  },
+  {
+    path: '/stock-input',
+    name: 'Stock-Input-List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/StockInputListView.vue')
+  },
+  {
+    path: '/register-stock-input',
+    name: 'Register-Stock-Input',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/RegisterStockInputView.vue')
   }
 ]
 
