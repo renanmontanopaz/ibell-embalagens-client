@@ -12,7 +12,7 @@ const routes: Array<RouteConfig> = [
   {
     path: '/register-product',
     name: 'Register-Product',
-    component: () => import(/* webpackChunkName: "about" */ '../views/product/FormProductView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/product/RegisterProductView.vue')
   },
   {
     path: '/client',
@@ -23,6 +23,16 @@ const routes: Array<RouteConfig> = [
     path: '/register-client',
     name: 'Register-Client',
     component: () => import(/* webpackChunkName: "about" */ '../views/cliente/RegisterClientView.vue')
+  },
+  {
+    path: '/provider',
+    name: 'Provider-List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/provider/ProviderListView.vue')
+  },
+  {
+    path: '/register-provider',
+    name: 'Register-Provider',
+    component: () => import(/* webpackChunkName: "about" */ '../views/provider/RegisterProviderView.vue')
   }
 ]
 
