@@ -1,30 +1,20 @@
 <template>
     <div class="columnsCadastrar">
-        <h1>CADASTRAR DE PRODUTO</h1>
-        <div class="field is-grouped">
-            <div class="control">
-                <input class="input" type="number" v-model="product.code" placeholder="Código">
-            </div>
-
-            <div class="control">
-                <input class="input" type="text" v-model="product.productName" placeholder="Nome">
-            </div>
-        </div>
+        <h1>REGISTRAR ENTRADA DE ESTOQUE</h1>
         <div class="field is-grouped">
             <div class="control">
                 <div class="select is-fullwidth">
-                    <select v-model="product.unitMeasure">
-                        <option value="undefined" disabled hidden>Unidade de Medida</option>
-                        <option value="UNIDADE">Unidade</option>
-                        <option value="QUILOGRAMA">Quilograma</option>
-                        <option value="METRO">Metro</option>
+                    <select v-model ="stockInput.product">
+                        <option value="undefined" disabled hidden>Selecione o Produto</option>
+                        <option :value="item" 
+                            v-for= "item in productList" :key="item.id"> {{ item.productName }} </option>
                     </select>
                 </div>
             </div>
             <div class="control">
                 <div class="select is-fullwidth">
-                    <select id="selectProvider" v-model="product.provider">
-                        <option value="undefined" selected disabled hidden>Selecione o Fornecedor</option>
+                    <select v-model ="stockInput.provider">
+                        <option value="undefined" disabled hidden>Selecione o Fornecedor</option>
                         <option :value="item" 
                             v-for= "item in providerList" :key="item.id"> {{ item.name }} </option>
                     </select>
@@ -33,12 +23,25 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <textarea class="textarea" v-model="product.observation" placeholder="Observação"></textarea>
+                <input class="input" type="number" v-model="stockInput.costValue" placeholder="Valor de Custo">
+            </div>
+            <div class="control">
+                <input class="input" type="number" v-model="stockInput.inputQuantity" placeholder="Quantidade de Entrada">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <router-link to="/"><button class="button is-link is-light">Voltar</button></router-link>
+                <textarea class="textarea" v-model="stockInput.observation" placeholder="Observação"></textarea>
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <input class="input" type="datetime-local" v-model="stockInput.dateEntry" placeholder="Data de Entrada">
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <router-link to="/stock-input"><button class="button is-link is-light">Voltar</button></router-link>
             </div>
             <div class="control">
                 <button @click="onClickCadastrar()" class="button is-success is-focused">Salvar</button>
@@ -72,35 +75,46 @@
 <script lang="ts">
     import { ProductClient } from '@/client/Product.client'
     import { ProviderClient } from '@/client/Provider.client'
+    import { StockInputClient } from '@/client/StockInput.client'
     import { Product } from '@/model/Product'
     import { Provider } from '@/model/Provider'
+    import { StockInput } from '@/model/StockInput'
     import { Component, Vue } from 'vue-property-decorator'
 
     @Component
-    export default class FormProductView extends Vue {
+    export default class RegisterStockInputView extends Vue {
 
+        private stockInputClient: StockInputClient = new StockInputClient()
         private productClient: ProductClient = new ProductClient()
         private providerClient: ProviderClient = new ProviderClient()
 
-        public product: Product = new Product()
+        public stockInput: StockInput = new StockInput()
 
         public providerList: Provider[] = []
         public productList: Product[] = []
 
         public mounted(): void {
+            this.selectProductList()
             this.selectProviderList()
         }
 
         public onClickCadastrar(): void {
             
-            this.productClient.save(this.product).then(
+            this.stockInputClient.save(this.stockInput).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
-                    this.product = new Product()
+                    this.stockInput = new StockInput()
                 },
                 error => {
                     console.log(error)
                 }
+            )
+        }
+
+        private selectProductList(): void {
+            this.productClient.findByActiveProducts().then(
+                success => this.productList = success,
+                error => console.log(error)
             )
         }
 

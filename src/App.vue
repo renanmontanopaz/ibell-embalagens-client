@@ -22,9 +22,9 @@
           <router-link to ='/provider'> 
             Fornecedores
           </router-link> 
-          <a class="navbar-item">
+          <router-link to ='/stock-input'> 
             Entrada de Estoque
-          </a>
+          </router-link> 
           <a class="navbar-item">
             Saida de Estoque
           </a>

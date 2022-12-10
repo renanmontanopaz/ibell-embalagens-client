@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-fullwidth">
-        <h1>FORNECEDORES</h1>
+        <h1>ENTRADAS DE ESTOQUE</h1>
         <div class="column">
             <p class="control">
                 <input class="input" type="text" placeholder="Pesquise aqui...">
@@ -10,9 +10,9 @@
                     Buscar
                 </button>
             </p>
-            <router-link to="/register-provider">
+            <router-link to="/register-stock-input">
                 <button class="button is-primary is-focused">
-                    Cadastrar Fornecedor
+                    Registrar Nova Entrada
                 </button>
             </router-link>    
         </div>
@@ -20,22 +20,22 @@
             <thead>
                 <tr>
                     <th>Data</th>
-                    <th>Nome</th>
-                    <th>CNPJ/CPF</th>
-                    <th>Telefone</th>
-                    <th>Endereço</th>
-                    <th>Email</th>
+                    <th>Produto</th>
+                    <th>Fornecedor</th>
+                    <th>Valor de Custo</th>
+                    <th>Quantidade de Entrada</th>
+                    <th>Data de Entrada</th>
                     <th>Observação</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for= 'item in providerList'>
+                <tr v-for= 'item in stockInputList'>
                     <th> {{ item.register }} </th>
-                    <th> {{ item.name }} </th>
-                    <th> {{ item.cnpjCpf }} </th>
-                    <th> {{ item.phoneNumber }} </th>
-                    <th> {{ item.addres }} </th>
-                    <th> {{ item.email }} </th>
+                    <th> {{ item.product.productName }} </th>
+                    <th> {{ item.provider.name }} </th>
+                    <th> {{ item.costValue }} </th>
+                    <th> {{ item.inputQuantity }} </th>
+                    <th> {{formatDate(item.dateEntry) }} </th>
                     <th> {{ item.observation }} </th>
                 </tr>
             </tbody>
@@ -88,26 +88,31 @@
 </style>
 
 <script lang="ts">
-    import { ProviderClient } from '@/client/Provider.client';
-    import { Provider } from '@/model/Provider';
+    import { StockInputClient } from '@/client/StockInput.client';
+    import { StockInput } from '@/model/StockInput';
     import { Component, Vue } from 'vue-property-decorator';
     
     @Component
-    export default class ProviderListView extends Vue {
-        private providerClient: ProviderClient = new ProviderClient()
+    export default class StockInputListView extends Vue {
+        private stockInputClient: StockInputClient = new StockInputClient()
 
-        public providerList: Provider[] = []
+        public stockInputList: StockInput[] = []
         
-        public provider: Provider = new Provider()
+        public stockInput: StockInput = new StockInput()
 
         public mounted(): void{
-            this.listProviders()
+            this.listStockInputs()
         }
 
-        private listProviders(): void{
-            this.providerClient.findByActiveProviders().then(
+        public formatDate(date : any) {
+            let obj = new Date(date)
+            return obj.toLocaleString()
+        }
+
+        private listStockInputs(): void{
+            this.stockInputClient.findByActiveStockInputs().then(
                 success => {
-                    this.providerList = success
+                    this.stockInputList = success
                 },
                 error => {
                     console.log(error)

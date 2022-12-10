@@ -7,12 +7,12 @@
             </div>
 
             <div class="control">
-                <input class="input" type="text" v-model="client.cnpjCpf" placeholder="CNPJ/CPF">
+                <input class="input" type="number" v-model="client.cnpjCpf" placeholder="CNPJ/CPF">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <input class="input" type="text" v-model="client.phoneNumber" placeholder="Telefone">
+                <input class="input" type="number" v-model="client.phoneNumber" placeholder="Telefone">
             </div>
             <div class="control">
                 <input class="input" type="text" v-model="client.address" placeholder="Endereço">
