@@ -26,6 +26,7 @@
                     <th>Quantidade de Entrada</th>
                     <th>Data de Entrada</th>
                     <th>Observação</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                     <th> {{ item.inputQuantity }} </th>
                     <th> {{formatDate(item.dateEntry) }} </th>
                     <th> {{ item.observation }} </th>
+                    <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
                 </tr>
             </tbody>
         </table>
@@ -90,7 +92,9 @@
 <script lang="ts">
     import { StockInputClient } from '@/client/StockInput.client';
     import { StockInput } from '@/model/StockInput';
+    import router from '@/router';
     import { Component, Vue } from 'vue-property-decorator';
+    import { RouterLink } from 'vue-router';
     
     @Component
     export default class StockInputListView extends Vue {
@@ -118,6 +122,10 @@
                     console.log(error)
                 }
             )
+        }
+
+        public onClickPageUpdate(id: number) {
+            router.push({ path:`/update-stock-input/${id}` })
         }
     }
 </script>

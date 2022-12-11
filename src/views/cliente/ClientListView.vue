@@ -26,6 +26,7 @@
                     <th>Endereço</th>
                     <th>Email</th>
                     <th>Observação</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                     <th> {{ item.address }} </th>
                     <th> {{ item.email }} </th>
                     <th> {{ item.observation }} </th>
+                    <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
                 </tr>
             </tbody>
         </table>
@@ -90,6 +92,7 @@
 <script lang="ts">
     import { ClientClient } from '@/client/Client.client';
     import { Client } from '@/model/Client';
+    import router from '@/router';
     import { Component, Vue } from 'vue-property-decorator';
     import { RouterLink } from "vue-router";
     
@@ -114,6 +117,10 @@
                     console.log(error)
                 }
             )
+        }
+
+        public onClickPageUpdate(id: number) {
+            router.push({ path:`/update-client/${id}` })
         }
     }
 </script>

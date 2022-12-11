@@ -27,6 +27,7 @@
                     <th>Valor Unitario</th>
                     <th>Fornecedor</th>
                     <th>Observação</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                     <th> {{ item.unitValue }} </th>
                     <th> {{ item.provider.name }} </th>
                     <th> {{ item.observation }} </th>
+                    <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
                 </tr>
             </tbody>
         </table>
@@ -96,6 +98,7 @@
     import { RouterLink } from "vue-router";
     import { ProductClient } from '@/client/Product.client';
     import { Product } from '@/model/Product';
+    import router from '@/router';
     
     @Component
     export default class ProductListView extends Vue {
@@ -119,6 +122,10 @@
                     console.log(error)
                 }
             )
+        }
+
+        public onClickPageUpdate(id: number) {
+            router.push({ path:`/update-product/${id}` })
         }
     }
 </script>
