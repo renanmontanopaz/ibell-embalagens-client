@@ -43,6 +43,16 @@ const routes: Array<RouteConfig> = [
     path: '/register-stock-input',
     name: 'Register-Stock-Input',
     component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/RegisterStockInputView.vue')
+  },
+  {
+    path: '/stock-output',
+    name: 'Stock-Output-List',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockOutput/StockOutputListView.vue')
+  },
+  {
+    path: '/register-stock-output',
+    name: 'Register-Stock-Output',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockOutput/RegisterStockOutputView.vue')
   }
 ]
 

@@ -25,9 +25,9 @@
           <router-link to ='/stock-input'> 
             Entrada de Estoque
           </router-link> 
-          <a class="navbar-item">
+          <router-link to ='/stock-output'> 
             Saida de Estoque
-          </a>
+          </router-link>
         </div>  
       </div>
     </nav>
