@@ -26,6 +26,7 @@
                     <th>Valor de Saída</th>
                     <th>Data de Saída</th>
                     <th>Observação</th>
+                    <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                     <th> {{ item.saleValue }} </th>
                     <th> {{ formatDate(item.departureDate) }} </th>
                     <th> {{ item.observation }} </th>
+                    <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
                 </tr>
             </tbody>
         </table>
@@ -90,7 +92,9 @@
 <script lang="ts">
     import { StockOutputClient } from '@/client/StockOutput.client';
     import { StockOutput } from '@/model/StockOutput';
+    import router from '@/router';
     import { Component, Vue } from 'vue-property-decorator';
+    import { RouterLink } from 'vue-router';
     
     @Component
     export default class StockOutputListView extends Vue {
@@ -118,6 +122,10 @@
                     console.log(error)
                 }
             )
+        }
+
+        public onClickPageUpdate(id: number) {
+            router.push({ path:`/update-stock-output/${id}` })
         }
     }
 </script>

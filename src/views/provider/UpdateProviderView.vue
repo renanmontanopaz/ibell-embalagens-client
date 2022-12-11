@@ -1,30 +1,36 @@
 <template>
     <div class="columnsCadastrar">
-        <h1>CADASTRAR FORNECEDOR</h1>
+        <h1>EDITAR FORNECEDOR</h1>
         <div class="field is-grouped">
             <div class="control">
+                <label>Nome</label>
                 <input class="input" type="text" v-model="provider.name" placeholder="Nome">
             </div>
 
             <div class="control">
+                <label>CNPJ/CPF</label>
                 <input class="input" type="text" v-model="provider.cnpjCpf" placeholder="CNPJ/CPF">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
+                <label>Telefone</label>
                 <input class="input" type="text" v-model="provider.phoneNumber" placeholder="Telefone">
             </div>
             <div class="control">
+                <label>Endereço</label>
                 <input class="input" type="text" v-model="provider.addres" placeholder="Endereço">
             </div>
         </div>
         <div class="field is-grouped">
-            <div class="control">
+            <div class="control divEmail">
+                <label>Email</label>
                 <input class="input email" type="text" v-model="provider.email" placeholder="Email">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
+                <label>Observação</label>
                 <textarea class="textarea" v-model="provider.observation" placeholder="Observação"></textarea>
             </div>
         </div>
@@ -62,6 +68,17 @@
             width: 400px;
             max-height: 200px;
         }
+
+        .divEmail {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        label {
+            color: black;
+            font-weight: 700;
+        }
     }
 </style>
 
@@ -71,7 +88,7 @@
     import { Component, Vue } from 'vue-property-decorator'
 
     @Component
-    export default class RegisterProviderView extends Vue {
+    export default class UpdateProviderView extends Vue {
 
         private providerClient: ProviderClient = new ProviderClient()
 
@@ -79,7 +96,20 @@
 
         public providerList: Provider[] = []
 
-        public mounted(): void {}
+        private id = Number(this.$route.params.id)
+
+        public mounted(): void {
+            this.getProvider()
+        }
+
+        private getProvider(): void {
+            this.providerClient.findById(this.id).then(
+                success => {
+                    this.provider = success
+                },
+                error => console.log(error)
+            )
+        }
 
         public onClickCadastrar(): void {
             

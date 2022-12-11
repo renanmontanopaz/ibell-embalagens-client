@@ -1,30 +1,36 @@
 <template>
     <div class="columnsCadastrar">
-        <h1>CADASTRAR DE CLIENTE</h1>
+        <h1>EDITAR CLIENTE</h1>
         <div class="field is-grouped">
             <div class="control">
+                <label>Nome</label>
                 <input class="input" type="text" v-model="client.name" placeholder="Nome">
             </div>
 
             <div class="control">
+                <label>CNPJ/CPF</label>
                 <input class="input" type="text" v-model="client.cnpjCpf" placeholder="CNPJ/CPF">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
+                <label>Telefone</label>
                 <input class="input" type="text" v-model="client.phoneNumber" placeholder="Telefone">
             </div>
             <div class="control">
+                <label>Endereço</label>
                 <input class="input" type="text" v-model="client.address" placeholder="Endereço">
             </div>
         </div>
         <div class="field is-grouped">
-            <div class="control">
+            <div class="control divEmail">
+                <label>Email</label>
                 <input class="input email" type="text" v-model="client.email" placeholder="Email">
             </div>
         </div>
         <div class="field is-grouped">
             <div class="control">
+                <label>Observação</label>
                 <textarea class="textarea" v-model="client.observation" placeholder="Observação"></textarea>
             </div>
         </div>
@@ -54,6 +60,12 @@
             margin-bottom: 15px;
         }
 
+        .divEmail {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
         .email {
             width: 400px;
         }
@@ -61,6 +73,11 @@
         .textarea {
             width: 400px;
             max-height: 200px;
+        }
+         
+        label {
+            color: black;
+            font-weight: 700;
         }
     }
 </style>
@@ -71,7 +88,7 @@
     import { Component, Vue } from 'vue-property-decorator'
 
     @Component
-    export default class RegisterClientView extends Vue {
+    export default class UpdateClientView extends Vue {
 
         private clientClient: ClientClient = new ClientClient()
 
@@ -79,7 +96,20 @@
 
         public clientList: Client[] = []
 
-        public mounted(): void {}
+        private id = Number(this.$route.params.id)
+
+        public mounted(): void {
+            this.getClient()
+        }
+
+        private getClient(): void {
+            this.clientClient.findById(this.id).then(
+                success => {
+                    this.client = success
+                },
+                error => console.log(error)
+            )
+        }
 
         public onClickCadastrar(): void {
             

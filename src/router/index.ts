@@ -15,6 +15,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/product/RegisterProductView.vue')
   },
   {
+    path: '/update-product/:id',
+    name: 'Update-Product',
+    component: () => import(/* webpackChunkName: "about" */ '../views/product/UpdateProductView.vue')
+  },
+  {
     path: '/client',
     name: 'Client-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/cliente/ClientListView.vue')
@@ -23,6 +28,11 @@ const routes: Array<RouteConfig> = [
     path: '/register-client',
     name: 'Register-Client',
     component: () => import(/* webpackChunkName: "about" */ '../views/cliente/RegisterClientView.vue')
+  },
+  {
+    path: '/update-client/:id',
+    name: 'Update-Client',
+    component: () => import(/* webpackChunkName: "about" */ '../views/cliente/UpdateClientView.vue')
   },
   {
     path: '/provider',
@@ -35,6 +45,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/provider/RegisterProviderView.vue')
   },
   {
+    path: '/update-provider/:id',
+    name: 'Update-Provider',
+    component: () => import(/* webpackChunkName: "about" */ '../views/provider/UpdateProviderView.vue')
+  },
+  {
     path: '/stock-input',
     name: 'Stock-Input-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/StockInputListView.vue')
@@ -45,6 +60,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/RegisterStockInputView.vue')
   },
   {
+    path: '/update-stock-input/:id',
+    name: 'Update-Stock-Input',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockInput/UpdateStockInputView.vue')
+  },
+  {
     path: '/stock-output',
     name: 'Stock-Output-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/stockOutput/StockOutputListView.vue')
@@ -53,6 +73,11 @@ const routes: Array<RouteConfig> = [
     path: '/register-stock-output',
     name: 'Register-Stock-Output',
     component: () => import(/* webpackChunkName: "about" */ '../views/stockOutput/RegisterStockOutputView.vue')
+  },
+  {
+    path: '/update-stock-output/:id',
+    name: 'Update-Stock-Output',
+    component: () => import(/* webpackChunkName: "about" */ '../views/stockOutput/UpdateStockOutputView.vue')
   }
 ]
 
