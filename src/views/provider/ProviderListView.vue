@@ -14,6 +14,11 @@
                 <button class="button is-primary is-focused">
                     Cadastrar Fornecedor
                 </button>
+            </router-link>  
+            <router-link to="/providers-inactives">
+                <button class="button is-danger">
+                    Visualizar Fornecedores Inativos
+                </button>
             </router-link>    
         </div>
         <table class="table is-bordered is-fullwidth">
@@ -40,7 +45,7 @@
                     <th> {{ item.observation }} </th>
                     <th class="opcoes">
                         <button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button>
-                        <button @click="onClickDisable(item.id)" class="button is-warning is-focused">Desativar</button>
+                        <button @click="onClickDisable(item.id)" class="button is-danger">Desativar</button>
                     </th>
                 </tr>
             </tbody>

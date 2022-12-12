@@ -15,6 +15,11 @@
                     Cadastrar Cliente
                 </button>
             </router-link>    
+            <router-link to="/clients-inactives">
+                <button class="button is-danger">
+                    Visualizar Clientes Inativos
+                </button>
+            </router-link>  
         </div>
         <table class="table is-bordered is-fullwidth">
             <thead>
@@ -40,7 +45,7 @@
                     <th> {{ item.observation }} </th>
                     <th class="opcoes">
                         <button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button>
-                        <button @click="onClickDisable(item.id)" class="button is-warning is-focused">Desativar</button>
+                        <button @click="onClickDisable(item.id)" class="button is-danger">Desativar</button>
                     </th>
                 </tr>
             </tbody>

@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-fullwidth">
-        <h1>PRODUTOS</h1>
+        <h1>PRODUTOS INATIVOS</h1>
         <div class="column">
             <p class="control">
                 <input class="input" type="text" placeholder="Pesquise aqui...">
@@ -10,16 +10,11 @@
                     Buscar
                 </button>
             </p>
-            <router-link to="/register-product">
+            <router-link to="/">
                 <button class="button is-primary is-focused">
-                    Cadastrar Produto
+                    Voltar
                 </button>
             </router-link>    
-            <router-link to="/product-inactives">
-                <button class="button is-danger">
-                    Visualizar Produtos Inativos
-                </button>
-            </router-link>   
         </div>
         <table class="table is-bordered is-fullwidth">
             <thead>
@@ -46,8 +41,7 @@
                     <th> {{ item.provider.name }} </th>
                     <th> {{ item.observation }} </th>
                     <th class="opcoes">
-                        <button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button>
-                        <button @click="onClickDisable(item.id)" class="button is-danger">Desativar</button>
+                        <button @click="onClickEnabled(item.id)" class="button is-success">Ativar</button>
                     </th>
                 </tr>
             </tbody>
@@ -115,7 +109,7 @@
     import router from '@/router';
     
     @Component
-    export default class ProductListView extends Vue {
+    export default class ProductsInactiveView extends Vue {
 
         private productClient: ProductClient = new ProductClient()
 
@@ -128,7 +122,7 @@
         }
 
         private listProdutos(): void{
-            this.productClient.findByActiveProducts().then(
+            this.productClient.findByInactiveProducts().then(
                 success => {
                     this.productList = success
                 },
@@ -142,8 +136,8 @@
             router.push({ path:`/update-product/${id}` })
         }
 
-        public onClickDisable(id: number) {
-            this.productClient.disable(id).then(
+        public onClickEnabled(id: number) {
+            this.productClient.enabled(id).then(
                 success => {
                     console.log("desativado com sucesso!!!")
                     window.location.reload()
