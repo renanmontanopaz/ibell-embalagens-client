@@ -3,7 +3,7 @@
         <h1>PRODUTOS</h1>
         <div class="column">
             <p class="control">
-                <input class="input" type="text" placeholder="Pesquise aqui...">
+                <input class="input search" type="text" placeholder="Pesquise aqui...">
             </p>
             <p class="control">
                 <button class="button is-link">
@@ -96,6 +96,10 @@
             display: flex;
             align-items: center;
             gap: 20px;
+        }
+
+        .search {
+            width: 800px;
         }
 
         display: flex;

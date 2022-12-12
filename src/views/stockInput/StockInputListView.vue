@@ -3,7 +3,7 @@
         <h1>ENTRADAS DE ESTOQUE</h1>
         <div class="column">
             <p class="control">
-                <input class="input" type="text" placeholder="Pesquise aqui...">
+                <input class="input search" type="text" placeholder="Pesquise aqui...">
             </p>
             <p class="control">
                 <button class="button is-link">
@@ -78,6 +78,10 @@
                     }
                 }
             }
+        }
+
+        .search {
+            width: 900px;
         }
 
         display: flex;
