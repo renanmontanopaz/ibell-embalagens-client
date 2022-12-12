@@ -23,7 +23,7 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <input class="input" type="number" v-model="stockInput.costValue" placeholder="Valor de Custo">
+                <input class="input" type="number" v-model="stockInput.costValue" placeholder="Valor de Custo Unitario">
             </div>
             <div class="control">
                 <input class="input" type="number" v-model="stockInput.inputQuantity" placeholder="Quantidade de Entrada">
