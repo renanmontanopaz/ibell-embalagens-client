@@ -50,9 +50,9 @@ export class ProviderClient {
         }
     }
 
-    public async disable(provider: Provider) : Promise<void> {
+    public async disable(id: number) : Promise<void> {
         try {
-            return (await this.axiosClient.put(`/disable/${provider.id}`)).data
+            return (await this.axiosClient.put(`/disable/${id}`)).data
         }
         catch(error:any) {
             return Promise.reject(error.response)

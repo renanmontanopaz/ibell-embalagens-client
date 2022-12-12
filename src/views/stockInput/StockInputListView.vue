@@ -36,7 +36,7 @@
                     <th> {{ item.provider.name }} </th>
                     <th> {{ item.costValue }} </th>
                     <th> {{ item.inputQuantity }} </th>
-                    <th> {{formatDate(item.dateEntry) }} </th>
+                    <th> {{ formatDate(item.dateEntry) }} </th>
                     <th> {{ item.observation }} </th>
                     <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
                 </tr>

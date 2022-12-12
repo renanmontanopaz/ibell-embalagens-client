@@ -7,7 +7,7 @@
             </div>
 
             <div class="control">
-                <input class="input" type="text" v-model="client.cnpjCpf" placeholder="CNPJ/CPF">
+                <input class="input" type="text" pattern="" v-model="client.cnpjCpf" placeholder="CNPJ/CPF">
             </div>
         </div>
         <div class="field is-grouped">

@@ -7,7 +7,7 @@
             </div>
 
             <div class="control">
-                <input class="input" type="text" v-model="provider.cnpjCpf" placeholder="CNPJ/CPF">
+                <input class="input" type="text" pattern="(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)" v-model="provider.cnpjCpf" placeholder="CNPJ/CPF">
             </div>
         </div>
         <div class="field is-grouped">
