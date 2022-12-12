@@ -38,7 +38,10 @@
                     <th> {{ item.addres }} </th>
                     <th> {{ item.email }} </th>
                     <th> {{ item.observation }} </th>
-                    <th><button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button></th>
+                    <th class="opcoes">
+                        <button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button>
+                        <button @click="onClickDisable(item.id)" class="button is-warning is-focused">Desativar</button>
+                    </th>
                 </tr>
             </tbody>
         </table>
@@ -78,6 +81,12 @@
                     }
                 }
             }
+        }
+
+        .opcoes {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         display: flex;
@@ -121,6 +130,18 @@
 
         public onClickPageUpdate(id: number) {
             router.push({ path:`/update-provider/${id}` })
+        }
+
+        public onClickDisable(id: number) {
+            this.providerClient.disable(id).then(
+                success => {
+                    console.log("desativado com sucesso!!!")
+                    window.location.reload()
+                },
+                error => {
+                    console.log(error)
+                }
+            )
         }
     }
 </script>

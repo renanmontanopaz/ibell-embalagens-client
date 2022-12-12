@@ -50,9 +50,9 @@ export class ProductClient {
         }
     }
 
-    public async disable(product: Product) : Promise<void> {
+    public async disable(id: number) : Promise<void> {
         try {
-            return (await this.axiosClient.put(`/disable/${product.id}`)).data
+            return (await this.axiosClient.put(`/disable/${id}`)).data
         }
         catch(error:any) {
             return Promise.reject(error.response)
