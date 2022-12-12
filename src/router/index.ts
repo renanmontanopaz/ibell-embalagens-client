@@ -20,6 +20,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/product/UpdateProductView.vue')
   },
   {
+    path: '/product-inactives',
+    name: 'Products-Inactives',
+    component: () => import(/* webpackChunkName: "about" */ '../views/product/ProductsInactiveView.vue')
+  },
+  {
     path: '/client',
     name: 'Client-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/cliente/ClientListView.vue')
@@ -35,6 +40,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/cliente/UpdateClientView.vue')
   },
   {
+    path: '/clients-inactives',
+    name: 'Clients-Inactives',
+    component: () => import(/* webpackChunkName: "about" */ '../views/cliente/ClientsInactivesView.vue')
+  },
+  {
     path: '/provider',
     name: 'Provider-List',
     component: () => import(/* webpackChunkName: "about" */ '../views/provider/ProviderListView.vue')
@@ -48,6 +58,11 @@ const routes: Array<RouteConfig> = [
     path: '/update-provider/:id',
     name: 'Update-Provider',
     component: () => import(/* webpackChunkName: "about" */ '../views/provider/UpdateProviderView.vue')
+  },
+  {
+    path: '/providers-inactives',
+    name: 'Providers-Inactives',
+    component: () => import(/* webpackChunkName: "about" */ '../views/provider/ProviderInactivesView.vue')
   },
   {
     path: '/stock-input',

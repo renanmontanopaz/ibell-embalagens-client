@@ -59,9 +59,9 @@ export class ClientClient {
         }
     }
 
-    public async enabled(client: Client) : Promise<void> {
+    public async enabled(id: number) : Promise<void> {
         try {
-            return (await this.axiosClient.put(`/enabled/${client.id}`)).data
+            return (await this.axiosClient.put(`/enabled/${id}`)).data
         }
         catch(error:any) {
             return Promise.reject(error.response)

@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-fullwidth">
-        <h1>PRODUTOS</h1>
+        <h1>CLIENTES INATIVOS</h1>
         <div class="column">
             <p class="control">
                 <input class="input" type="text" placeholder="Pesquise aqui...">
@@ -10,44 +10,36 @@
                     Buscar
                 </button>
             </p>
-            <router-link to="/register-product">
+            <router-link to="/client">
                 <button class="button is-primary is-focused">
-                    Cadastrar Produto
+                    Voltar
                 </button>
-            </router-link>    
-            <router-link to="/product-inactives">
-                <button class="button is-danger">
-                    Visualizar Produtos Inativos
-                </button>
-            </router-link>   
+            </router-link>     
         </div>
         <table class="table is-bordered is-fullwidth">
             <thead>
                 <tr>
                     <th>Data</th>
                     <th>Nome</th>
-                    <th>Codigo</th>
-                    <th>Unidade de Medida</th>
-                    <th>Quantidade</th>
-                    <th>Valor Unitario</th>
-                    <th>Fornecedor</th>
+                    <th>CNPJ/CPF</th>
+                    <th>Telefone</th>
+                    <th>Endereço</th>
+                    <th>Email</th>
                     <th>Observação</th>
                     <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for= 'item in productList'>
+                <tr v-for= 'item in clientList'>
                     <th> {{ item.register }} </th>
-                    <th> {{ item.productName }} </th>
-                    <th> {{ item.code }} </th>
-                    <th> {{ item.unitMeasure }} </th>
-                    <th> {{ item.quantity }} </th>
-                    <th> {{ item.unitValue }} </th>
-                    <th> {{ item.provider.name }} </th>
+                    <th> {{ item.name }} </th>
+                    <th> {{ item.cnpjCpf }} </th>
+                    <th> {{ item.phoneNumber }} </th>
+                    <th> {{ item.address }} </th>
+                    <th> {{ item.email }} </th>
                     <th> {{ item.observation }} </th>
                     <th class="opcoes">
-                        <button @click="onClickPageUpdate(item.id)" class="button is-warning is-focused">Editar</button>
-                        <button @click="onClickDisable(item.id)" class="button is-danger">Desativar</button>
+                        <button @click="onClickEnabled(item.id)" class="button is-success">Ativar</button>
                     </th>
                 </tr>
             </tbody>
@@ -68,7 +60,6 @@
             align-items: center;
             gap: 10px;
             padding: 0px 10px;
-
             .input {
                 border-color: blue;
             }
@@ -82,7 +73,6 @@
                     }
                 }
             }
-
             tbody {
                 tr {
                     th {
@@ -108,29 +98,28 @@
 </style>
 
 <script lang="ts">
+    import { ClientClient } from '@/client/Client.client';
+    import { Client } from '@/model/Client';
+    import router from '@/router';
     import { Component, Vue } from 'vue-property-decorator';
     import { RouterLink } from "vue-router";
-    import { ProductClient } from '@/client/Product.client';
-    import { Product } from '@/model/Product';
-    import router from '@/router';
     
     @Component
-    export default class ProductListView extends Vue {
+    export default class ClientsInactivesView extends Vue {
+        private clientClient: ClientClient = new ClientClient()
 
-        private productClient: ProductClient = new ProductClient()
-
-        public productList: Product[] = []
-
-        public product: Product = new Product()
+        public clientList: Client[] = []
+        
+        public client: Client = new Client()
 
         public mounted(): void{
-            this.listProdutos()
+            this.listClients()
         }
 
-        private listProdutos(): void{
-            this.productClient.findByActiveProducts().then(
+        private listClients(): void{
+            this.clientClient.findByInactiveClients().then(
                 success => {
-                    this.productList = success
+                    this.clientList = success
                 },
                 error => {
                     console.log(error)
@@ -139,11 +128,11 @@
         }
 
         public onClickPageUpdate(id: number) {
-            router.push({ path:`/update-product/${id}` })
+            router.push({ path:`/update-client/${id}` })
         }
 
-        public onClickDisable(id: number) {
-            this.productClient.disable(id).then(
+        public onClickEnabled(id: number) {
+            this.clientClient.enabled(id).then(
                 success => {
                     console.log("desativado com sucesso!!!")
                     window.location.reload()
