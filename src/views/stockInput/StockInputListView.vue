@@ -22,7 +22,7 @@
                     <th>Data</th>
                     <th>Produto</th>
                     <th>Fornecedor</th>
-                    <th>Valor de Custo</th>
+                    <th>Valor de Custo Unitario</th>
                     <th>Quantidade de Entrada</th>
                     <th>Data de Entrada</th>
                     <th>Observação</th>
