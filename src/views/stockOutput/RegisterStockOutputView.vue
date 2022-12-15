@@ -4,7 +4,7 @@
         <div class="field is-grouped">
             <div class="control">
                 <div class="select is-fullwidth">
-                    <select v-model ="stockOutput.product">
+                    <select id="selectProduct" v-model ="stockOutput.product">
                         <option value="undefined" disabled hidden>Selecione o Produto</option>
                         <option :value="item" 
                             v-for= "item in productList" :key="item.id"> {{ item.productName }} </option>
@@ -23,8 +23,14 @@
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <input class="input" type="number" v-model="stockOutput.saleValue" placeholder="Valor de Saida">
+                <input class="input" type="number" v-model="stockOutput.saleValue" placeholder="Valor de Saida"> 
             </div>
+
+            <!-- <select v-model ="stockOutput.saleValue">
+                <option :value="product" 
+                    item in product :key="product.id"> {{ product.unitValue }} </option>
+            </select> -->
+                    
             <div class="control">
                 <input class="input" type="number" v-model="stockOutput.quantityOutput" placeholder="Quantidade de Saída">
             </div>
@@ -89,6 +95,7 @@
         private clientClient: ClientClient = new ClientClient()
 
         public stockOutput: StockOutput = new StockOutput()
+        public product: Product = new Product()
 
         public clientList: Client[] = []
         public productList: Product[] = []

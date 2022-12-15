@@ -121,7 +121,7 @@
 
         public onClickCadastrar(): void {
             
-            this.stockOutputClient.save(this.stockOutput).then(
+            this.stockOutputClient.update(this.stockOutput).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
                     this.stockOutput = new StockOutput()

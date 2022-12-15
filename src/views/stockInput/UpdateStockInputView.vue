@@ -37,12 +37,12 @@
                 <textarea class="textarea" v-model="stockInput.observation" placeholder="Observação"></textarea>
             </div>
         </div>
-        <div class="field is-grouped">
+        <!-- <div class="field is-grouped">
             <div class="control">
                 <label>Data de Entrada</label>
                 <input class="input" type="datetime-local" v-model="stockInput.dateEntry" placeholder="Data de Entrada">
             </div>
-        </div>
+        </div> -->
         <div class="field is-grouped">
             <div class="control">
                 <router-link to="/stock-input"><button class="button is-link is-light">Voltar</button></router-link>
@@ -121,7 +121,7 @@
 
         public onClickCadastrar(): void {
             
-            this.stockInputClient.save(this.stockInput).then(
+            this.stockInputClient.update(this.stockInput).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
                     this.stockInput = new StockInput()
