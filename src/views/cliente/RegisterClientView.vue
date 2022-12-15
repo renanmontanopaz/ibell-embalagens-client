@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>CADASTRAR DE CLIENTE</h1>
+        <div class="columns" v-if="notificacao.ativo">
+        <div class="column is-12">
+          <div :class="notificacao.classe">
+            <button @click="onClickFecharNotificacao()" class="delete" ></button>
+            {{ notificacao.mensagem }}
+          </div>
+        </div>
+      </div>
         <div class="field is-grouped">
             <div class="control">
                 <input class="input" type="text" v-model="client.name" placeholder="Nome">
@@ -69,6 +77,7 @@
     import { ClientClient } from '@/client/Client.client'
     import { Client } from '@/model/Client'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class RegisterClientView extends Vue {
@@ -76,6 +85,8 @@
         private clientClient: ClientClient = new ClientClient()
 
         public client: Client = new Client()
+
+        private notificacao: Mensagem = new Mensagem()
 
         public clientList: Client[] = []
 
@@ -86,12 +97,19 @@
             this.clientClient.save(this.client).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                  this.notificacao = this.notificacao.new(
+                      true, 'notification is-primary', 'Cliente cadastrado com sucesso!'
+                  )
                     this.client = new Client()
                 },
                 error => {
                     console.log(error)
+                  this.notificacao = this.notificacao.new(
+                      true, 'notification is-danger', 'Cliente ja está cadastrado'/*+ error.config.data*/
+                  )
                 }
             )
         }
+
     }
 </script>

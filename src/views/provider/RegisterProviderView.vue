@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>CADASTRAR FORNECEDOR</h1>
+      <div class="columns" v-if="notificacao.ativo">
+        <div class="column is-12">
+          <div :class="notificacao.classe">
+            <button @click="onClickFecharNotificacao()" class="delete" ></button>
+            {{ notificacao.mensagem }}
+          </div>
+        </div>
+      </div>
         <div class="field is-grouped">
             <div class="control">
                 <input class="input" type="text" v-model="provider.name" placeholder="Nome">
@@ -69,6 +77,7 @@
     import { ProviderClient } from '@/client/Provider.client'
     import { Provider } from '@/model/Provider'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class RegisterProviderView extends Vue {
@@ -76,6 +85,8 @@
         private providerClient: ProviderClient = new ProviderClient()
 
         public provider: Provider = new Provider()
+
+        private notificacao: Mensagem = new Mensagem()
 
         public providerList: Provider[] = []
 
@@ -86,12 +97,21 @@
             this.providerClient.save(this.provider).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Fornecedor cadastrado com sucesso!'
+                    )
                     this.provider = new Provider()
                 },
                 error => {
                     console.log(error)
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-danger', 'Fornecedor ja está cadastrado'/*+ error.config.data*/
+                    )
                 }
             )
+        }
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
         }
     }
 </script>

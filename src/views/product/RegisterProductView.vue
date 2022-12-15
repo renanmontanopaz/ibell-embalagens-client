@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>CADASTRAR DE PRODUTO</h1>
+      <div class="columns" v-if="notificacao.ativo">
+        <div class="column is-12">
+          <div :class="notificacao.classe">
+            <button @click="onClickFecharNotificacao()" class="delete" ></button>
+            {{ notificacao.mensagem }}
+          </div>
+        </div>
+      </div>
         <div class="field is-grouped">
             <div class="control">
                 <input class="input" type="number" v-model="product.code" placeholder="Código">
@@ -75,13 +83,14 @@
     import { Product } from '@/model/Product'
     import { Provider } from '@/model/Provider'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class FormProductView extends Vue {
 
         private productClient: ProductClient = new ProductClient()
         private providerClient: ProviderClient = new ProviderClient()
-
+        private notificacao: Mensagem = new Mensagem()
         public product: Product = new Product()
 
         public providerList: Provider[] = []
@@ -96,10 +105,16 @@
             this.productClient.save(this.product).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Produto cadastrado com sucesso!'
+                    )
                     this.product = new Product()
                 },
                 error => {
                     console.log(error)
+                      this.notificacao = this.notificacao.new(
+                          true, 'notification is-danger', 'Produto ja está cadastrado'/*+ error.config.data*/
+                      )
                 }
             )
         }
@@ -110,5 +125,9 @@
                 error => console.log(error)
             )
         }
+
+      private onClickFecharNotificacao(): void {
+        this.notificacao = new Mensagem()
+      }
     }
 </script>

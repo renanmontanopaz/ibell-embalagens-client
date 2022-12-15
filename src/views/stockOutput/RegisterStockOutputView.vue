@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>REGISTRAR SAÍDA DE ESTOQUE</h1>
+        <div class="columns" v-if="notificacao.ativo">
+          <div class="column is-12">
+            <div :class="notificacao.classe">
+              <button @click="onClickFecharNotificacao()" class="delete" ></button>
+              {{ notificacao.mensagem }}
+            </div>
+          </div>
+        </div>
         <div class="field is-grouped">
             <div class="control">
                 <div class="select is-fullwidth">
@@ -86,6 +94,7 @@
     import { Product } from '@/model/Product'
     import { StockOutput } from '@/model/StockOutput'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class RegisterStockOutputView extends Vue {
@@ -96,6 +105,7 @@
 
         public stockOutput: StockOutput = new StockOutput()
         public product: Product = new Product()
+        private notificacao: Mensagem = new Mensagem()
 
         public clientList: Client[] = []
         public productList: Product[] = []
@@ -110,6 +120,9 @@
             this.stockOutputClient.save(this.stockOutput).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Saída registrada com sucesso!'
+                    )
                     this.stockOutput = new StockOutput()
                 },
                 error => {
@@ -130,6 +143,10 @@
                 success => this.clientList = success,
                 error => console.log(error)
             )
+        }
+
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
         }
     }
 </script>

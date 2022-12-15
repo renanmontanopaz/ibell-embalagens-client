@@ -1,6 +1,14 @@
 <template>
     <div class="columns is-fullwidth">
         <h1>ENTRADAS DE ESTOQUE</h1>
+        <div class="columns" v-if="notificacao.ativo">
+          <div class="column is-12">
+            <div :class="notificacao.classe">
+              <button @click="onClickFecharNotificacao()" class="delete" ></button>
+              {{ notificacao.mensagem }}
+            </div>
+          </div>
+        </div>
         <div class="column">
             <p class="control">
                 <input class="input search" type="text" placeholder="Pesquise aqui...">
@@ -99,6 +107,7 @@
     import router from '@/router';
     import { Component, Vue } from 'vue-property-decorator';
     import { RouterLink } from 'vue-router';
+    import {Mensagem} from "@/model/Mensagem";
     
     @Component
     export default class StockInputListView extends Vue {
@@ -107,6 +116,8 @@
         public stockInputList: StockInput[] = []
         
         public stockInput: StockInput = new StockInput()
+
+        private notificacao: Mensagem = new Mensagem()
 
         public mounted(): void{
             this.listStockInputs()
