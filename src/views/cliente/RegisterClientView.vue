@@ -97,9 +97,9 @@
             this.clientClient.save(this.client).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
-                  this.notificacao = this.notificacao.new(
-                      true, 'notification is-primary', 'Cliente cadastrado com sucesso!'
-                  )
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Cliente cadastrado com sucesso!'
+                    )
                     this.client = new Client()
                 },
                 error => {
@@ -109,6 +109,10 @@
                   )
                 }
             )
+        }
+
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
         }
 
     }

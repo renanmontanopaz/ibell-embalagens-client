@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>EDITAR CLIENTE</h1>
+        <div class="columns" v-if="notificacao.ativo">
+          <div class="column is-12">
+            <div :class="notificacao.classe">
+              <button @click="onClickFecharNotificacao()" class="delete" ></button>
+              {{ notificacao.mensagem }}
+            </div>
+          </div>
+        </div>
         <div class="field is-grouped">
             <div class="control">
                 <label>Nome</label>
@@ -86,6 +94,7 @@
     import { ClientClient } from '@/client/Client.client'
     import { Client } from '@/model/Client'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class UpdateClientView extends Vue {
@@ -97,6 +106,7 @@
         public clientList: Client[] = []
 
         private id = Number(this.$route.params.id)
+        private notificacao: Mensagem = new Mensagem()
 
         public mounted(): void {
             this.getClient()
@@ -116,12 +126,19 @@
             this.clientClient.save(this.client).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Cliente atualizado com sucesso!'
+                    )
                     this.client = new Client()
                 },
                 error => {
                     console.log(error)
                 }
             )
+        }
+
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
         }
     }
 </script>
