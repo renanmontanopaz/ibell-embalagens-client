@@ -126,8 +126,8 @@
             )
         }
 
-      private onClickFecharNotificacao(): void {
-        this.notificacao = new Mensagem()
-      }
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
+        }
     }
 </script>

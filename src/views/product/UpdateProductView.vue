@@ -1,6 +1,14 @@
 <template>
     <div class="columnsCadastrar">
         <h1>EDITAR PRODUTO</h1>
+        <div class="columns" v-if="notificacao.ativo">
+          <div class="column is-12">
+            <div :class="notificacao.classe">
+              <button @click="onClickFecharNotificacao()" class="delete" ></button>
+              {{ notificacao.mensagem }}
+            </div>
+          </div>
+        </div>
         <div class="field is-grouped">
             <div class="control">
                 <label>Código</label>
@@ -83,12 +91,14 @@
     import { Product } from '@/model/Product'
     import { Provider } from '@/model/Provider'
     import { Component, Vue } from 'vue-property-decorator'
+    import {Mensagem} from "@/model/Mensagem";
 
     @Component
     export default class UpdateProductView extends Vue {
 
         private productClient: ProductClient = new ProductClient()
         private providerClient: ProviderClient = new ProviderClient()
+        private notificacao: Mensagem = new Mensagem()
 
         public product: Product = new Product()
 
@@ -116,6 +126,9 @@
             this.productClient.save(this.product).then(
                 success => {
                     console.log('Registro Cadastrado com sucesso!!!')
+                    this.notificacao = this.notificacao.new(
+                        true, 'notification is-primary', 'Produto editado com sucesso!'
+                    )
                     this.product = new Product()
                 },
                 error => {
@@ -129,6 +142,10 @@
                 success => this.providerList = success,
                 error => console.log(error)
             )
+        }
+
+        private onClickFecharNotificacao(): void {
+          this.notificacao = new Mensagem()
         }
     }
 </script>
