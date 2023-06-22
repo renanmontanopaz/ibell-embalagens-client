@@ -6,7 +6,7 @@ export class ProductClient {
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'http://localhost:8080/api/product',
+            baseURL: 'https://transportadora-back.onrender.com/api/product',
             headers: {
                 'Content-type' : 'application/json'
             }

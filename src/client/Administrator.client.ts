@@ -6,7 +6,7 @@ export class AdministratorClient {
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'http://localhost:8080/api/administrator',
+            baseURL: 'https://transportadora-back.onrender.com/api/administrator',
             headers: {
                 'Content-type' : 'application/json'
             }
