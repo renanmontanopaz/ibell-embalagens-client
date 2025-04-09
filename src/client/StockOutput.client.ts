@@ -6,7 +6,7 @@ export class StockOutputClient {
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'https://transportadora-back.onrender.com/api/stock-output',
+            baseURL: '/api/stock-output',
             headers: {
                 'Content-type' : 'application/json'
             }

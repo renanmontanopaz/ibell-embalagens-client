@@ -7,7 +7,7 @@ export class StockInputClient {
 
     constructor() {
         this.axiosClient = axios.create({
-            baseURL: 'https://transportadora-back.onrender.com/api/stock-input',
+            baseURL: '/api/stock-input',
             headers: {
                 'Content-type' : 'application/json'
             }
