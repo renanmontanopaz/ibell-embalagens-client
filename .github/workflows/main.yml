@@ -30,7 +30,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
+      # --- PASSO DE DEPURAÇÃO ADICIONADO ---
+      - name: List files in repository root
+        run: ls -la
+      - name: List files in frontend directory
+        run: ls -la ./ibell-embalagens-client/ # Use o nome da pasta que você acha que é correto
+      # --- FIM DO PASSO DE DEPURAÇÃO ---
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
