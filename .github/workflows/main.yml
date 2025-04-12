@@ -2,18 +2,15 @@ name: Build e Deploy para as VMs do GCP
 
 on:
   push:
-    branches: [ main ] # Gatilho: push na branch main
+    branches: [ main ]
 
 env:
-  # --- Configurações do GCP ---
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GCP_REGION: ${{ secrets.GCP_COMPUTE_REGION }}
   GCP_ZONE: ${{ secrets.GCP_COMPUTE_ZONE }}
   VM_FRONTEND_NAME: vm-frontend-mensal
-  # FRONTEND_PROJECT_PATH ainda é útil para o comando de deploy na VM
   FRONTEND_PROJECT_PATH: /home/renanmphp/ibell-embalagens-client
 
-  # --- Configurações das Imagens Docker (GHCR) ---
   GHCR_REGISTRY: ghcr.io
   GHCR_IMAGE_OWNER: renanmontanopaz
   FRONTEND_IMAGE_NAME: ghcr.io/renanmontanopaz/ibell-embalagens-client
@@ -35,7 +32,6 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-          # CORRIGIDO: Aponta para o package-lock.json na RAIZ do repositório
           cache-dependency-path: ./package-lock.json
 
       - name: Login to GitHub Container Registry
@@ -53,7 +49,6 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      # --- Frontend Build & Push ---
       - name: Build and Push Frontend Docker Image
         run: |
           # CORRIGIDO: REMOVA o 'cd' - O Dockerfile está na raiz '.'
@@ -62,12 +57,10 @@ jobs:
           echo "Pushing frontend image to GHCR..."
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:latest
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }}
-        # working-directory não é necessário se estamos na raiz
 
       # --- Deploy Frontend ---
       - name: Deploy Frontend to vm-frontend via SSH/IAP
         run: |
-          # (Nenhuma mudança necessária aqui, pois usa FRONTEND_PROJECT_PATH que é o caminho na VM)
           gcloud compute ssh ${{ env.VM_FRONTEND_NAME }} \
             --zone ${{ env.GCP_ZONE }} \
             --project ${{ env.GCP_PROJECT_ID }} \
