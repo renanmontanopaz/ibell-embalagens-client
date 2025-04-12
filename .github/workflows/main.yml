@@ -56,12 +56,12 @@ jobs:
       # --- Frontend Build & Push ---
       - name: Build and Push Frontend Docker Image
         run: |
+          cd ibell-embalagens-client # Ou o nome correto da pasta
           # Builda a imagem Docker do frontend
           docker build -t ${{ env.FRONTEND_IMAGE_NAME }}:latest -t ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }} .
           # Envia as tags para o GHCR
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:latest
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }}
-        working-directory: . # Define o diretório base para o 'cd frontend'
 
       # --- Deploy Frontend ---
       - name: Deploy Frontend to vm-frontend via SSH/IAP
