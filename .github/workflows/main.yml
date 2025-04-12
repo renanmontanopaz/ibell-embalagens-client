@@ -1,0 +1,86 @@
+name: Build e Deploy para as VMs do GCP
+
+on:
+  push:
+    branches: [ main ] # Gatilho: push na branch main
+
+env:
+  # --- Configurações do GCP ---
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_REGION: ${{ secrets.GCP_COMPUTE_REGION }}
+  GCP_ZONE: ${{ secrets.GCP_COMPUTE_ZONE }}
+  VM_FRONTEND_NAME: vm-frontend-mensal # Nome da sua VM de backend/db
+  FRONTEND_PROJECT_PATH: /home/renanmphp/ibell-embalagens-client # CAMINHO ABSOLUTO para a pasta do projeto na vm-backend-db (onde está o docker-compose.yml)
+
+  # --- Configurações das Imagens Docker (GHCR) ---
+  # Substitua 'SEU_USUARIO_GITHUB' pelo seu nome de usuário ou organização
+  # Substitua 'NOME_DO_REPO' pelo nome do seu repositório
+  GHCR_REGISTRY: ghcr.io
+  GHCR_IMAGE_OWNER: renanmontanopaz
+  FRONTEND_IMAGE_NAME: ghcr.io/renanmontanopaz/ibell-embalagens-client
+  FRONTEND_CONTAINER_NAME: meu-vue-container # Nome do container frontend (do comando docker run)
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # Ler código
+      packages: write # Escrever/Enviar pacotes/imagens Docker para GHCR
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Ajuste para a versão do seu frontend
+          cache: 'npm'
+          cache-dependency-path: ./frontend/package-lock.json # Ajuste o caminho se necessário
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }} # Usuário que iniciou a action
+          password: ${{ secrets.GITHUB_TOKEN }} # Token temporário do GitHub Actions
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # --- Frontend Build & Push ---
+      - name: Build and Push Frontend Docker Image
+        run: |
+          # Builda a imagem Docker do frontend
+          docker build -t ${{ env.FRONTEND_IMAGE_NAME }}:latest -t ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }} .
+          # Envia as tags para o GHCR
+          docker push ${{ env.FRONTEND_IMAGE_NAME }}:latest
+          docker push ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }}
+        working-directory: . # Define o diretório base para o 'cd frontend'
+
+      # --- Deploy Frontend ---
+      - name: Deploy Frontend to vm-frontend via SSH/IAP
+        run: |
+          gcloud compute ssh ${{ env.VM_FRONTEND_NAME }} \
+            --zone ${{ env.GCP_ZONE }} \
+            --project ${{ env.GCP_PROJECT_ID }} \
+            --quiet \
+            --tunnel-through-iap \
+            --command="
+              echo '>>> Logging into GHCR...' && \
+              echo '${{ secrets.GITHUB_TOKEN }}' | sudo docker login ${{ env.GHCR_REGISTRY }} -u ${{ github.actor }} --password-stdin && \
+              echo '>>> Pulling new frontend image...' && \
+              sudo docker pull ${{ env.FRONTEND_IMAGE_NAME }}:latest && \
+              echo '>>> Stopping and removing old frontend container...' && \
+              (sudo docker stop ${{ env.FRONTEND_CONTAINER_NAME }} && sudo docker rm ${{ env.FRONTEND_CONTAINER_NAME }}) || echo 'Container stop/rm failed, likely already stopped/removed.' && \
+              echo '>>> Starting new frontend container...' && \
+              sudo docker run -d --name ${{ env.FRONTEND_CONTAINER_NAME }} -p 80:80 ${{ env.FRONTEND_IMAGE_NAME }}:latest && \
+              echo '>>> Frontend deployment potentially complete.' && \
+              echo '>>> Cleaning up old images (optional)...' && \
+              sudo docker image prune -af || echo 'Prune failed, continuing...'
+              "
