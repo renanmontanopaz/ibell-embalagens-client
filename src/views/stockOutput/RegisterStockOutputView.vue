@@ -33,11 +33,6 @@
             <div class="control">
                 <input class="input" type="number" v-model="stockOutput.saleValue" placeholder="Valor de Saida"> 
             </div>
-
-            <!-- <select v-model ="stockOutput.saleValue">
-                <option :value="product" 
-                    item in product :key="product.id"> {{ product.unitValue }} </option>
-            </select> -->
                     
             <div class="control">
                 <input class="input" type="number" v-model="stockOutput.quantityOutput" placeholder="Quantidade de Saída">
