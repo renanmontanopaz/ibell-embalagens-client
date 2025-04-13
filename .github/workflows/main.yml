@@ -3,6 +3,8 @@ name: Build e Deploy para as VMs do GCP
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
@@ -51,7 +53,6 @@ jobs:
 
       - name: Build and Push Frontend Docker Image
         run: |
-          # CORRIGIDO: REMOVA o 'cd' - O Dockerfile está na raiz '.'
           echo "Building frontend image from repository root..."
           docker build -t ${{ env.FRONTEND_IMAGE_NAME }}:latest -t ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }} .
           echo "Pushing frontend image to GHCR..."
