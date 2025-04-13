@@ -26,6 +26,7 @@ jobs:
       packages: write
 
     steps:
+      # Configuração inicial
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -36,6 +37,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./package-lock.json
 
+      # Autenticações
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -51,6 +53,7 @@ jobs:
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      # Construção e push da imagem Docker
       - name: Build and Push Frontend Docker Image
         run: |
           echo "Building frontend image from repository root..."
@@ -59,7 +62,7 @@ jobs:
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:latest
           docker push ${{ env.FRONTEND_IMAGE_NAME }}:${{ github.sha }}
 
-      # --- Deploy Frontend ---
+      # Deploy na VM
       - name: Deploy Frontend to vm-frontend via SSH/IAP
         run: |
           gcloud compute ssh ${{ env.VM_FRONTEND_NAME }} \
