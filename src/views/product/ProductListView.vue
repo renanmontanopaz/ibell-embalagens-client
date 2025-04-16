@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-fullwidth">
-        <h1>PRODUTOS</h1>
+        <h1>PRODUTOS 2</h1>
         <div class="column">
             <p class="control">
                 <input class="input search" type="text" placeholder="Pesquise aqui...">
